@@ -1,0 +1,131 @@
+#!/bin/bash
+###ref:https://www.tldp.org/LDP/abs/html/timedate.html
+#date +%Y-%m-%d_%H-%M-%S
+#date +%y%m%d-%H%M%S
+
+# TODO:
+# - may need to work on "type from keyboard" action
+
+function usage {
+	myname=$(basename $0)
+	
+	echo "
+Usage: $myname [options]
+	-h	show this help
+	-f	use modfication of the specified file instead of current time. If this option is not specified current system time is used.
+	-s	time in short form
+	-c	time in compact form
+	-n	time in normal form
+	-l	time in long form-
+	-d	use just day portion
+	-t	use just time portion
+	-k	type it with keyboard (will also push to clipboard, will not print to stdout)
+	-b	just push it to clipboard (will not print)
+	-p	just print it stdout (default option)
+"
+    exit 1
+}
+
+SEPARATOR="_"
+DAYFORM="%y%m%d"
+TIMEFORM="%H%M%S"
+MYTIME=$(date +%s)
+
+ACTION_TYPE_BY_KBD=false
+ACTION_PUSH_TO_CLIBRD=false
+ACTION_PRINT_TO_STDOUT=true
+
+while getopts "hf:sncldtkbp" option; do
+	case $option in
+		h)
+			usage
+		;;
+		f) 
+			FILENAME=$OPTARG
+			TIMESTYLE=$DAYFORM$SEPARATOR$TIMEFORM
+#			CMD="ls -ld --time-style=+%y%m%d-%H%M%S ${2} | awk {print \$6}"
+			MYTIME=$(stat -c '%Y' $FILENAME)
+		;;
+		s)
+			DAYFORM="%y%m%d"
+			TIMEFORM="%H%M"
+		;;
+		n)
+			DAYFORM="%y%m%d"
+			TIMEFORM="%H%M%S"
+		;;
+		c)
+			DAYFORM="%Y%m%d"
+			TIMEFORM="%H%M%S"
+		;;
+		l)
+			DAYFORM="%Y-%m-%d"
+			TIMEFORM="%H-%M-%S"
+		;;
+		d)
+			SEPARATOR=""	# Dont print seperator
+			TIMEFORM=""		# Dont print time
+		;;
+		t)
+			SEPARATOR=""	# Dont print seperator
+			DAYFORM=""		# Dont print day
+		;;
+		k)
+                        ACTION_TYPE_BY_KBD=true
+                        ACTION_PUSH_TO_CLIBRD=true
+                        ACTION_PRINT_TO_STDOUT=false
+		;;
+		b)
+                        ACTION_TYPE_BY_KBD=false
+                        ACTION_PUSH_TO_CLIBRD=true
+                        ACTION_PRINT_TO_STDOUT=false
+		;;
+		p)
+                        ACTION_TYPE_BY_KBD=false
+                        ACTION_PUSH_TO_CLIBRD=false
+                        ACTION_PRINT_TO_STDOUT=true
+		;;
+		*) usage
+		;;
+    esac
+done
+
+TIMESTYLE="+"$DAYFORM$SEPARATOR$TIMEFORM
+MYTIMESTR=$(date --date="@${MYTIME}" $TIMESTYLE)
+
+if [ "${ACTION_PRINT_TO_STDOUT}" = true ] ; then
+# just print to stdout
+  echo "${MYTIMESTR}"
+fi
+
+if [ "${ACTION_PUSH_TO_CLIBRD}" = true ] ; then
+# put the date/time in the clipboard
+# REQ: apt install xsel xdotool xclip
+echo "${MYTIMESTR}" | tr -d "\n" | xsel -i -b;
+#  echo "${MYTIMESTR}" >> /dev/null
+fi
+
+if [ "${ACTION_TYPE_BY_KBD}" = true ] ; then
+# lets type it (using clipboard) from keyboard. ACTION_PUSH_TO_CLIBRD=true is required to work
+#  sh -c 'xdotool type "${MYTIMESTR}"'
+#  xdotool type "${MYTIMESTR}"
+#  sh -c 'xvkbd -text ${MYTIMESTR}'
+  xvkbd -text ${MYTIMESTR}
+fi
+
+###!!!DEBUG###
+### echo "$MYTIMESTR : $@" >> ~/_DEBUG_mytimelog.log
+
+#xdotool key "ctrl+v"; #simulate a ctrl-v
+#xdotool keyup "super+d"; #pretend the user let go of the super+d keys, else it interferes with ctrl-v
+#xdotool keydown "super"; #unpretend the user let go of the super key
+
+
+#REFS:
+# - https://stackoverflow.com/questions/34480877/how-to-use-getopts-option-without-argument-at-the-end-in-bash/34481046
+# - https://stackoverflow.com/questions/1092631/get-current-time-in-seconds-since-the-epoch-on-linux-bash
+# - https://askubuntu.com/questions/803149/how-to-display-modification-time-of-a-file
+# - https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_02_03.html
+# - http://www.arcadien.net/node/48
+# - https://sick.codes/paste-clipboard-linux-xdotool-ctrl-v-terminal-type/
+# - https://unix.stackexchange.com/questions/11889/pasting-x-selection-not-clipboard-contents-with-keyboard/11890
