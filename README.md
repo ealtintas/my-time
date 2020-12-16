@@ -34,8 +34,8 @@ Usage: my-time [options]
 	-f	use modfication of the specified file instead of current time. If this option is not specified current system time is used.
 	-s	time in short form
 	-c	time in compact form
-	-n	time in normal form
-	-l	time in long form-
+	-n	time in normal form (default)
+	-l	time in long form
 	-d	use just day portion
 	-t	use just time portion
 	-k	type it with keyboard (will also push to clipboard, will not print to stdout)
@@ -47,19 +47,19 @@ Usage: my-time [options]
 ## Examples
 
 ```
-$ mytime
+$ my-time
 201016_073253
 
-$ mytime -s
+$ my-time -s
 201016_0732
 
-$ mytime -l
+$ my-time -l
 2020-10-16_07-32-21
 
-$ mytime -d
+$ my-time -d
 201016
 
-$ mytime -t
+$ my-time -t
 073231
 
 ```
