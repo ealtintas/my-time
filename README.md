@@ -8,7 +8,7 @@ Print, type (from keyboard) or copy to clipboard time in various forms.
 
 ## Info
 
-This is a simple bash script which helps command line hackers to type time in various forms...
+This is a simple bash script which helps command line hackers to type time in various convinient forms...
 
 If you use a window manager like openbox you may use this script as a handy keyboard shortcut for printing time.
 
@@ -24,7 +24,7 @@ An example snippet for ~/openbox/rc.xml:
 ...
 ```
 
-You may also use it in your own scripts to refer to time infromation.
+You may also use it in your own scripts to refer to time information in a cleaner way than 'date +FORMAT'.
 
 ## Usage
 
@@ -47,6 +47,9 @@ Usage: my-time [options]
 ## Examples
 
 ```
+$ mytime
+201016_073253
+
 $ mytime -s
 201016_0732
 
