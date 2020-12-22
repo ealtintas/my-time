@@ -32,7 +32,7 @@ TIMEFORM="%H%M%S"
 MYTIME=$(date +%s)
 
 ACTION_TYPE_BY_KBD=false
-ACTION_PUSH_TO_CLIBRD=false
+ACTION_PUSH_TO_CLIBRD=false # !!! true may cause problems with normal/desktop clipboard usage what this script is used in scripts which are running periodically.
 ACTION_PRINT_TO_STDOUT=true
 
 while getopts "hf:sncldtkbp" option; do
@@ -93,33 +93,32 @@ done
 TIMESTYLE="+"$DAYFORM$SEPARATOR$TIMEFORM
 MYTIMESTR=$(date --date="@${MYTIME}" $TIMESTYLE)
 
+###!!!DEBUG###
+echo "$MYTIMESTR : $@" >> ~/_DEBUG_mytimelog.log
+
 if [ "${ACTION_PRINT_TO_STDOUT}" = true ] ; then
-# just print to stdout
-  echo "${MYTIMESTR}"
+	# just print to stdout
+	echo "${MYTIMESTR}"
 fi
 
 if [ "${ACTION_PUSH_TO_CLIBRD}" = true ] ; then
-# put the date/time in the clipboard
-# REQ: apt install xsel xdotool xclip
-echo "${MYTIMESTR}" | tr -d "\n" | xsel -i -b;
-#  echo "${MYTIMESTR}" >> /dev/null
+	# put the date/time in the clipboard
+	# REQ: apt install xsel xdotool xclip
+	echo "${MYTIMESTR}" | tr -d "\n" | xsel -i -b;
+	#  echo "${MYTIMESTR}" >> /dev/null
 fi
 
 if [ "${ACTION_TYPE_BY_KBD}" = true ] ; then
-# lets type it (using clipboard) from keyboard. ACTION_PUSH_TO_CLIBRD=true is required to work
-#  sh -c 'xdotool type "${MYTIMESTR}"'
-#  xdotool type "${MYTIMESTR}"
-#  sh -c 'xvkbd -text ${MYTIMESTR}'
-  xvkbd -text ${MYTIMESTR}
+	# lets type it (using clipboard) from keyboard. ACTION_PUSH_TO_CLIBRD=true is required to work
+	#  sh -c 'xdotool type "${MYTIMESTR}"'
+	#  xdotool type "${MYTIMESTR}"
+	#  sh -c 'xvkbd -text ${MYTIMESTR}'
+	xvkbd -text ${MYTIMESTR}
 fi
-
-###!!!DEBUG###
-### echo "$MYTIMESTR : $@" >> ~/_DEBUG_mytimelog.log
 
 #xdotool key "ctrl+v"; #simulate a ctrl-v
 #xdotool keyup "super+d"; #pretend the user let go of the super+d keys, else it interferes with ctrl-v
 #xdotool keydown "super"; #unpretend the user let go of the super key
-
 
 #REFS:
 # - https://stackoverflow.com/questions/34480877/how-to-use-getopts-option-without-argument-at-the-end-in-bash/34481046
