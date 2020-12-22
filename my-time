@@ -94,7 +94,7 @@ TIMESTYLE="+"$DAYFORM$SEPARATOR$TIMEFORM
 MYTIMESTR=$(date --date="@${MYTIME}" $TIMESTYLE)
 
 ###!!!DEBUG###
-echo "$MYTIMESTR : $@" >> ~/_DEBUG_mytimelog.log
+# echo "$MYTIMESTR : $@" >> ~/_DEBUG_mytimelog.log
 
 if [ "${ACTION_PRINT_TO_STDOUT}" = true ] ; then
 	# just print to stdout
