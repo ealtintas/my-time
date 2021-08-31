@@ -1,6 +1,6 @@
 # my-time
 
-**Turkish:** Bash ile yazılmış bu betik, basitçe zamanı uygun bir biçimde basar.
+**Turkish:** Bash ile yazılmış bu basit betik, komut satırını veya klavyesini yoğun kullanan linux kullanıcılarına günlük çalışmalarında yardımcı olmak üzere zaman bilgisini çeşitli şekillerde (klavyeden) yazdırır ve/veya panoya kopyalar. Örenğin openbox (ya da benzeri bir pencere yöneticisi) kullanıyorsanız, ~/openbox/rc.xml dosyasını düzenleyerek bu betiği güncel zamanı klavyeden hızlıca yazmak için kullanışlı bir klavye kısayolu olarak ayarlayabilirsiniz.
 
 ## Description
 
