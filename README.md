@@ -8,7 +8,7 @@ Print, type (from keyboard) or copy to clipboard time in various forms.
 
 ## Info
 
-This is a simple bash script which helps command line hackers to type time in various convenient forms...
+This is a simple bash script which helps keyboard or command line hackers to type time in various convenient forms...
 
 If you use a window manager like openbox you may use this script as a handy keyboard shortcut for printing time.
 
