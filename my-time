@@ -43,8 +43,8 @@ while getopts "hf:sncldtkbp" option; do
 		f) 
 			FILENAME=$OPTARG
 			TIMESTYLE=$DAYFORM$SEPARATOR$TIMEFORM
-#			CMD="ls -ld --time-style=+%y%m%d-%H%M%S ${2} | awk {print \$6}"
-			MYTIME=$(stat -c '%Y' $FILENAME)
+			# CMD="ls -ld --time-style=+%y%m%d-%H%M%S ${2} | awk {print \$6}"
+			MYTIME=$(stat -c '%Y' "$FILENAME")
 		;;
 		s)
 			DAYFORM="%y%m%d"
