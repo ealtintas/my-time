@@ -13,12 +13,12 @@ function usage {
 Usage: $myname [options]
 	-h	show this help
 	-f	use modfication of the specified file instead of current time. If this option is not specified current system time is used.
-	-s	time in short form
-	-c	time in compact form
-	-n	time in normal form (default)
-	-l	time in long form
-	-d	use just day portion
-	-t	use just time portion
+	-s	time in short form				(Example: 230128_1248)
+	-c	time in compact form			(Example: 20230128_124842)
+	-n	time in normal form (default)	(Example: 230128_124848)
+	-l	time in long form				(Example: 2023-01-28_12-48-54)
+	-d	use just day portion			(Example: 321231)
+	-t	use just time portion			(Example: 235959)
 	-k	type it with keyboard (will also push to clipboard, will not print to stdout)
 	-b	just push it to clipboard (will not print)
 	-p	just print it stdout (default option)
