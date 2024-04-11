@@ -1,7 +1,17 @@
 #!/bin/bash
-###ref:https://www.tldp.org/LDP/abs/html/timedate.html
-#date +%Y-%m-%d_%H-%M-%S
-#date +%y%m%d-%H%M%S
+#REFS:
+# - date +%Y-%m-%d_%H-%M-%S
+# - date +%y%m%d-%H%M%S
+# - https://www.tldp.org/LDP/abs/html/timedate.html
+# - https://ostechnix.com/parse-arguments-in-bash-scripts-using-getopts/
+# - https://stackoverflow.com/questions/34480877/how-to-use-getopts-option-without-argument-at-the-end-in-bash/34481046
+# - https://stackoverflow.com/questions/1092631/get-current-time-in-seconds-since-the-epoch-on-linux-bash
+# - https://askubuntu.com/questions/803149/how-to-display-modification-time-of-a-file
+# - https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_02_03.html
+# - http://www.arcadien.net/node/48
+# - https://sick.codes/paste-clipboard-linux-xdotool-ctrl-v-terminal-type/
+# - https://unix.stackexchange.com/questions/11889/pasting-x-selection-not-clipboard-contents-with-keyboard/11890
+# - https://askubuntu.com/questions/648874/xdotools-type-command-eating-characters
 
 # TODO:
 # - may need to work on "type from keyboard" action
@@ -96,13 +106,11 @@ MYTIMESTR=$(date --date="@${MYTIME}" $TIMESTYLE)
 ###!!!DEBUG###
 # echo "$MYTIMESTR : $@" >> ~/_DEBUG_mytimelog.log
 
-if [ "${ACTION_PRINT_TO_STDOUT}" = true ] ; then
-	# just print to stdout
+if [ "${ACTION_PRINT_TO_STDOUT}" = true ] ; then	# just print to stdout
 	echo "${MYTIMESTR}"
 fi
 
-if [ "${ACTION_PUSH_TO_CLIBRD}" = true ] ; then
-	# put the date/time in the clipboard
+if [ "${ACTION_PUSH_TO_CLIBRD}" = true ] ; then         # put the date/time in the clipboard
 	# REQ: apt install xsel xdotool xclip
 	echo "${MYTIMESTR}" | tr -d "\n" | xsel -i -b;
 	#  echo "${MYTIMESTR}" >> /dev/null
